@@ -1,0 +1,242 @@
+{
+  "name": "Security - Okta",
+  "description": null,
+  "permissions": "PRIVATE",
+  "pages": [
+    {
+      "name": "Security - Okta",
+      "description": null,
+      "widgets": [
+        {
+          "visualization": {
+            "id": "viz.area"
+          },
+          "layout": {
+            "column": 1,
+            "row": 1,
+            "height": 3,
+            "width": 8
+          },
+          "title": "Failed Okta Sign-Ins by User",
+          "rawConfiguration": {
+            "dataFormatters": [],
+            "legend": {
+              "enabled": true
+            },
+            "nrqlQueries": [
+              {
+                "accountId": $ACCOUNT_ID,
+                "query": "SELECT count(*) FROM OktaEvents WHERE category = 'user.session.start' AND outcome = 'FAILURE' FACET user TIMESERIES SINCE 2 days ago"
+              }
+            ],
+            "yAxisLeft": {
+              "zero": true
+            }
+          },
+          "linkedEntityGuids": null
+        },
+        {
+          "visualization": {
+            "id": "viz.pie"
+          },
+          "layout": {
+            "column": 9,
+            "row": 1,
+            "height": 3,
+            "width": 4
+          },
+          "title": "Failed Okta Sign-Ins by User",
+          "rawConfiguration": {
+            "facet": {
+              "showOtherSeries": true
+            },
+            "nrqlQueries": [
+              {
+                "accountId": $ACCOUNT_ID,
+                "query": "SELECT count(*) FROM OktaEvents WHERE category = 'user.session.start' AND outcome = 'FAILURE' FACET user LIMIT 1000 SINCE 2 days ago"
+              }
+            ]
+          },
+          "linkedEntityGuids": null
+        },
+        {
+          "visualization": {
+            "id": "viz.area"
+          },
+          "layout": {
+            "column": 1,
+            "row": 4,
+            "height": 3,
+            "width": 8
+          },
+          "title": "Rejected Okta MFA Pushes by User",
+          "rawConfiguration": {
+            "dataFormatters": [],
+            "facet": {
+              "showOtherSeries": false
+            },
+            "legend": {
+              "enabled": true
+            },
+            "nrqlQueries": [
+              {
+                "accountId": $ACCOUNT_ID,
+                "query": "SELECT count(*) FROM OktaEvents WHERE category = 'user.mfa.okta_verify.deny_push' FACET user SINCE 2 DAYS AGO TIMESERIES LIMIT 1000"
+              }
+            ]
+          },
+          "linkedEntityGuids": null
+        },
+        {
+          "visualization": {
+            "id": "viz.pie"
+          },
+          "layout": {
+            "column": 9,
+            "row": 4,
+            "height": 3,
+            "width": 4
+          },
+          "title": "Rejected Okta MFA Pushes User",
+          "rawConfiguration": {
+            "dataFormatters": [],
+            "facet": {
+              "showOtherSeries": false
+            },
+            "nrqlQueries": [
+              {
+                "accountId": $ACCOUNT_ID,
+                "query": "SELECT count(*) FROM OktaEvents WHERE category = 'user.mfa.okta_verify.deny_push' FACET user SINCE 2 DAYS AGO LIMIT 1000"
+              }
+            ]
+          },
+          "linkedEntityGuids": null
+        },
+        {
+          "visualization": {
+            "id": "viz.area"
+          },
+          "layout": {
+            "column": 1,
+            "row": 7,
+            "height": 3,
+            "width": 8
+          },
+          "title": "Successful Okta Sign-Ins from Non-NR Employees",
+          "rawConfiguration": {
+            "legend": {
+              "enabled": true
+            },
+            "nrqlQueries": [
+              {
+                "accountId": $ACCOUNT_ID,
+                "query": "SELECT count(*) FROM OktaEvents WHERE user NOT LIKE '%@$COMPANY_EMAIL_DOMAIN.com' SINCE 2 days ago FACET user TIMESERIES"
+              }
+            ],
+            "yAxisLeft": {
+              "zero": true
+            }
+          },
+          "linkedEntityGuids": null
+        },
+        {
+          "visualization": {
+            "id": "viz.pie"
+          },
+          "layout": {
+            "column": 9,
+            "row": 7,
+            "height": 3,
+            "width": 4
+          },
+          "title": "Successful Okta Sign-Ins from Non-NR Employees",
+          "rawConfiguration": {
+            "facet": {
+              "showOtherSeries": true
+            },
+            "nrqlQueries": [
+              {
+                "accountId": $ACCOUNT_ID,
+                "query": "SELECT count(*) FROM OktaEvents WHERE user NOT LIKE '%@$COMPANY_EMAIL_DOMAIN.com' SINCE 2 days ago FACET user LIMIT 100"
+              }
+            ]
+          },
+          "linkedEntityGuids": null
+        },
+        {
+          "visualization": {
+            "id": "viz.area"
+          },
+          "layout": {
+            "column": 1,
+            "row": 10,
+            "height": 3,
+            "width": 8
+          },
+          "title": "Successful Okta Sign-Ins by Country",
+          "rawConfiguration": {
+            "legend": {
+              "enabled": true
+            },
+            "nrqlQueries": [
+              {
+                "accountId": $ACCOUNT_ID,
+                "query": "SELECT count(*) FROM OktaEvents WHERE category = 'user.session.start' AND outcome = 'SUCCESS' FACET srcCountry LIMIT 100 TIMESERIES SINCE 2 days ago"
+              }
+            ]
+          },
+          "linkedEntityGuids": null
+        },
+        {
+          "visualization": {
+            "id": "viz.pie"
+          },
+          "layout": {
+            "column": 9,
+            "row": 10,
+            "height": 3,
+            "width": 4
+          },
+          "title": "Successful Sign-Ins By Country",
+          "rawConfiguration": {
+            "facet": {
+              "showOtherSeries": true
+            },
+            "nrqlQueries": [
+              {
+                "accountId": $ACCOUNT_ID,
+                "query": "SELECT count(*) FROM OktaEvents WHERE category = 'user.session.start' AND outcome = 'SUCCESS' FACET srcCountry LIMIT 100 SINCE 2 days ago"
+              }
+            ]
+          },
+          "linkedEntityGuids": null
+        },
+        {
+          "visualization": {
+            "id": "viz.table"
+          },
+          "layout": {
+            "column": 1,
+            "row": 13,
+            "height": 5,
+            "width": 12
+          },
+          "title": "Suspicious Events",
+          "rawConfiguration": {
+            "dataFormatters": [],
+            "facet": {
+              "showOtherSeries": false
+            },
+            "nrqlQueries": [
+              {
+                "accountId": $ACCOUNT_ID,
+                "query": "SELECT * FROM OktaEvents WHERE severity = 'WARN' SINCE 2 days ago LIMIT 1000"
+              }
+            ]
+          },
+          "linkedEntityGuids": null
+        }
+      ]
+    }
+  ]
+}
